@@ -1,6 +1,6 @@
 // 1) GLOBALES
-let nombres = ["Salario", "Cena", "Freelance", "Transporte"];
-let valores = [3000, -45.5, 500, -30];
+let nombres = [];
+let valores = [];
 
 // 2) FUNCIONES IMPERATIVAS
 function registrarMovimiento() {
