@@ -1,7 +1,23 @@
 // 1) GLOBALES
 
-let nombres = [];
-let valores = [];
+let nombres = ['Salario', 'Cena', 'Freelance', 'Transporte'];
+let valores = [3000, -45.50, 500, -30];
+// Pruebas del checkpoint 1
+console.log('Ingresos:', obtenerIngresos(valores)); 
+// Debe mostrar: [3000, 500]
+
+console.log('Gastos:', obtenerGastos(valores)); 
+// Debe mostrar: [-45.50, -30]
+
+console.log('Montos sin signo:', montosAbsolutos(valores)); 
+// Debe mostrar: [3000, 45.5, 500, 30]
+
+console.log('Primer gasto > $40:', buscarPrimerGastoMayor(valores, 40)); 
+// Debe mostrar: -45.50
+
+// Reto autonomo
+console.log('Cantidad de gastos:', contarGastos(valores)); 
+// Debe mostrar: 2
 
 // 2) FUNCIONES IMPERATIVAS
 
