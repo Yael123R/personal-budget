@@ -50,3 +50,59 @@ const imprimirReporte = (nombres, valores) => {
 const promedioMovimiento = (valores) =>
   valores.reduce((acumulador, valor) => acumulador + Math.abs(valor), 0) /
   valores.length;
+
+// Parte 3
+// Composición + DRY
+const promedioIngresos = (valores) => {
+  const ingresos = obtenerIngresos(valores);
+  if (ingresos.length === 0) return 0;
+  return totalIngresos(valores) / ingresos.length;
+};
+
+// Reto autonomo 3
+const validarPresupuesto = (valores, limite) =>
+  Math.abs(totalGastos(valores)) <= limite;
+
+// Logros adicionales (Laboratorio 6)
+
+// Logro 1: Mediana
+const mediana = (valores) => {
+  if (valores.length === 0) return 0;
+  const ordenados = [...valores].sort((a, b) => a - b);
+  const mitad = Math.floor(ordenados.length / 2);
+
+  return ordenados.length % 2 !== 0
+    ? ordenados[mitad]
+    : (ordenados[mitad - 1] + ordenados[mitad]) / 2;
+};
+
+// Logro 1: Desviación Estándar
+const desviacionEstandar = (valores) => {
+  if (valores.length === 0) return 0;
+  const prom = valores.reduce((acc, val) => acc + val, 0) / valores.length;
+  const varianza =
+    valores.reduce((acc, val) => acc + Math.pow(val - prom, 2), 0) /
+    valores.length;
+  return Math.sqrt(varianza);
+};
+
+// Logro 2: Categorización
+const categorizarPorMonto = (valores) => {
+  return valores.reduce(
+    (resultado, valor) => {
+      const abs = Math.abs(valor);
+
+      // Criterio de rangos
+      if (abs <= 50) {
+        resultado.bajo.push(valor);
+      } else if (abs <= 500) {
+        resultado.medio.push(valor);
+      } else {
+        resultado.alto.push(valor);
+      }
+
+      return resultado;
+    },
+    { bajo: [], medio: [], alto: [] },
+  );
+};
