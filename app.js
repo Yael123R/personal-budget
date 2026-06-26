@@ -28,8 +28,8 @@ function registrarMovimiento() {
     return;
   }
 
-  // 1 solo push de un objeto. valor SIEMPRE positivo.
-  movimientos.push({ nombre: nombre, tipo: tipo, valor: valor });
+  // 1 solo push de un objeto. valor SIEMPRE positivo. (Lab 7 - Parte 2)
+  movimientos.push(new Movimiento(nombre.trim(), tipo, valor));
 
   console.log("Movimiento registrado temporalmente.");
 }

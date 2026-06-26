@@ -50,9 +50,7 @@ const imprimirReporte = (movimientos) => {
   console.log("--- Resumen Final ---");
 
   movimientos.forEach((movimiento, indice) => {
-    console.log(
-      `  ${indice + 1}. ${movimiento.nombre} (${movimiento.tipo}): $${movimiento.valor.toFixed(2)}`,
-    );
+    console.log(`  ${indice + 1}. ${movimiento.datosMovimiento()}`);
   });
 
   const reporte = generarValoresReporte(movimientos);
@@ -84,7 +82,9 @@ const validarPresupuesto = (movimientos, limite) =>
 // Logro 1: Mediana
 const mediana = (movimientos) => {
   if (movimientos.length === 0) return 0;
-  const valores = movimientos.map(m => m.tipo === 'gasto' ? -m.valor : m.valor);
+  const valores = movimientos.map((m) =>
+    m.tipo === "gasto" ? -m.valor : m.valor,
+  );
   const ordenados = [...valores].sort((a, b) => a - b);
   const mitad = Math.floor(ordenados.length / 2);
 
@@ -96,7 +96,9 @@ const mediana = (movimientos) => {
 // Logro 1: Desviación Estándar
 const desviacionEstandar = (movimientos) => {
   if (movimientos.length === 0) return 0;
-  const valores = movimientos.map(m => m.tipo === 'gasto' ? -m.valor : m.valor);
+  const valores = movimientos.map((m) =>
+    m.tipo === "gasto" ? -m.valor : m.valor,
+  );
   const prom = valores.reduce((acc, val) => acc + val, 0) / valores.length;
   const varianza =
     valores.reduce((acc, val) => acc + Math.pow(val - prom, 2), 0) /
