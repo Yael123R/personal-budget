@@ -1,6 +1,5 @@
-// 1) GLOBALES
-let nombres = [];
-let valores = [];
+// 1) GLOBALES (Laboratorio 7)
+let movimientos = [];
 
 // 2) FUNCIONES IMPERATIVAS
 function registrarMovimiento() {
@@ -9,58 +8,56 @@ function registrarMovimiento() {
   // Validar que los nombres no se repitan
   if (
     nombre &&
-    nombres.some((n) => n.toLowerCase() === nombre.toLowerCase().trim())
+    movimientos.some((m) => m.nombre.toLowerCase() === nombre.toLowerCase().trim())
   ) {
     alert(`El movimiento "${nombre}" ya existe. Usa un nombre diferente.`);
     return;
   }
 
   const tipo = prompt("Tipo (ingreso / gasto):");
-  const monto = parseFloat(prompt("Monto:"));
+  const valor = parseFloat(prompt("Monto:"));
 
   // Validar datos
   if (
     !nombre ||
     (tipo !== "ingreso" && tipo !== "gasto") ||
-    isNaN(monto) ||
-    monto <= 0
+    isNaN(valor) ||
+    valor <= 0
   ) {
     alert("Datos inválidos. Intenta de nuevo.");
     return;
   }
 
-  let valor = tipo === "ingreso" ? monto : -monto;
-
-  nombres.push(nombre.trim());
-  valores.push(valor);
+  // 1 solo push de un objeto. valor SIEMPRE positivo.
+  movimientos.push({ nombre: nombre, tipo: tipo, valor: valor });
 
   console.log("Movimiento registrado temporalmente.");
 }
 
 // 3) FLUJO DE EJECUCIÓN
 let continuar = "si";
-
-while (continuar === "si" || continuar === "sí") {
+while (continuar === "si") {
   registrarMovimiento();
-
-  let respuesta = prompt("¿Registrar otro movimiento? (si/no):");
-  continuar = respuesta ? respuesta.toLowerCase().trim() : "no";
+  continuar = prompt("¿Registrar otro movimiento? (si/no):");
 }
 
 // 4) REPORTE FUNCIONAL FINAL
 // Imprimir desglose
-imprimirReporte(nombres, valores);
+imprimirReporte(movimientos); // un solo argumento
+
+// Array temporal de números "con signo" para mantener vivas las funciones del Lab 6
+const valoresCompatibles = movimientos.map(m => m.tipo === 'gasto' ? -m.valor : m.valor);
 
 // Imprimir promedio de ingresos
-console.log("Promedio de ingresos: $" + promedioIngresos(valores).toFixed(2));
+console.log("Promedio de ingresos: $" + promedioIngresos(movimientos).toFixed(2));
 
-// Reto autonomo 3
+// Reto autonomo 3 (Laboratorio 6)
 console.log(
   "¿El presupuesto está dentro del límite de $100?:",
-  validarPresupuesto(valores, 100),
+  validarPresupuesto(movimientos, 100),
 );
 
 // Logros adicionales (Laboratorio 6)
-console.log("Mediana de movimientos:", mediana(valores));
-console.log("Desviación Estándar:", desviacionEstandar(valores).toFixed(2));
-console.log("Categorización por monto:", categorizarPorMonto(valores));
+console.log("Mediana de movimientos:", mediana(movimientos));
+console.log("Desviación Estándar:", desviacionEstandar(movimientos).toFixed(2));
+console.log("Categorización por monto:", categorizarPorMonto(movimientos));
